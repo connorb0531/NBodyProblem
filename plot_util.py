@@ -3,29 +3,19 @@ from mpl_toolkits.mplot3d import Axes3D
 
 FIG_SIZE = (5, 5)
 
-def plot_EMS(history):
-    plt.close('all')
-    
+def plot_solar_sys(history, N, attr):
     # Plot Trajectories (Full System View)
     fig = plt.figure(figsize=FIG_SIZE)
     ax = fig.add_subplot(111, projection='3d')
     
-    # Plot the Sun's trajectory with an orange line
-    ax.plot(history[:, 0, 0], history[:, 0, 1], history[:, 0, 2], 
-            label="Sun", color='orange')  # Sun in orange
-    
-    # Plot Earth's trajectory in blue
-    ax.plot(history[:, 1, 0], history[:, 1, 1], history[:, 1, 2], 
-            label="Earth", color='blue')  # Earth in blue
-    
-    # Plot Moon's trajectory in grey
-    ax.plot(history[:, 2, 0], history[:, 2, 1], history[:, 2, 2], 
-            label="Moon", color='gray')  # Moon in grey
-    
-    # Scatter plot for the Sun (starting position) for visibility
-    ax.scatter(history[-1, 0, 0], history[0, 0, 1], history[0, 0, 2], 
-               color='orange', s=500)  # Large Sun marker
-    
+    for i in range(N):
+        ax.plot(history[:, i, 0], history[:, i, 1], history[:, i, 2], 
+        label=attr[0][i], color=attr[1][i])
+
+
+    ax.scatter(history[-1, 0, 0], history[-1, 0, 1], history[-1, 0, 2], 
+           color=attr[1][0], s=75)  # Large Sun marker
+
     # Axis Labels
     ax.set_xlabel("X Position (AU)")
     ax.set_ylabel("Y Position (AU)")
@@ -35,7 +25,8 @@ def plot_EMS(history):
     ax.legend()
     plt.ion()
     plt.show()
-    
+
+def plot_MS(history):
     # Plot Trajectories (Earth-Moon System View)
     fig = plt.figure(figsize=FIG_SIZE)
     ax = fig.add_subplot(111, projection='3d')
@@ -66,8 +57,6 @@ def plot_EMS(history):
     plt.show()
 
 def plot_fig8(history):
-    plt.close('all')
-    
     fig = plt.figure(figsize=FIG_SIZE)
     ax = fig.add_subplot(111, projection='3d')
     
@@ -82,7 +71,7 @@ def plot_fig8(history):
     ax.scatter(history[-1, 1, 0], history[-1, 1, 1], history[-1, 1, 2], 
                color='blue', s=100, marker='o', label="Body 2")
     ax.scatter(history[-1, 2, 0], history[-1, 2, 1], history[-1, 2, 2], 
-               color='green', s=100, marker='o', label="Body 3")
+               color='green', s=50, marker='o', label="Body 3")
 
     
     # Set labels
